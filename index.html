@@ -1,0 +1,1598 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>说明方法小达人 · 五/六年级语文</title>
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5.1.0/dist/tesseract.min.js"></script>
+<style>
+:root{
+  --blue:#2f80ed;--green:#27ae60;--orange:#f2994a;--red:#eb5757;
+  --purple:#9b51e0;--teal:#00a3a3;--brown:#8d6e63;--gray:#607d8b;--pink:#e91e63;
+  --ink:#1f2937;--muted:#6b7280;--line:#e3e8f0;--bg:#f2f6ff;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+  font-size:16px;line-height:1.65;
+}
+#app{max-width:940px;margin:0 auto;padding:0 12px 60px}
+header{
+  position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--line);
+  margin:0 -12px 14px;padding:8px 12px 0;
+}
+.brand{font-size:19px;font-weight:800;letter-spacing:.5px;color:var(--blue);padding:4px 0 8px}
+nav{display:flex;gap:6px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav button{
+  flex:0 0 auto;border:1px solid var(--line);background:#fff;color:var(--muted);
+  padding:7px 14px;border-radius:20px;font-size:14px;cursor:pointer;font-family:inherit;
+  transition:.18s;white-space:nowrap
+}
+nav button.on{background:var(--blue);color:#fff;border-color:var(--blue);box-shadow:0 4px 12px rgba(47,128,237,.3)}
+.view{display:none;animation:fade .25s ease}
+.view.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.panel{background:#fff;border-radius:16px;padding:16px 18px;margin-bottom:14px;box-shadow:0 2px 10px rgba(30,60,120,.06)}
+h2{font-size:19px;margin:6px 0 12px}
+h3{font-size:16px;margin:0 0 8px}
+p{margin:6px 0}
+.muted{color:var(--muted);font-size:14px}
+.btn{
+  border:none;border-radius:12px;padding:11px 20px;font-size:15px;font-weight:600;
+  cursor:pointer;font-family:inherit;transition:.15s;background:var(--blue);color:#fff;
+}
+.btn:active{transform:scale(.97)}
+.btn.ghost{background:#eef3fb;color:var(--blue)}
+.btn.green{background:var(--green)}
+.btn.orange{background:var(--orange)}
+.btn.red{background:var(--red)}
+.btn.gray{background:#eceff3;color:#444}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+textarea,input[type=text]{
+  width:100%;border:2px solid var(--line);border-radius:12px;padding:11px 13px;
+  font-family:inherit;font-size:15px;outline:none;transition:.15s;background:#fbfcff;color:var(--ink)
+}
+textarea:focus,input[type=text]:focus{border-color:var(--blue);background:#fff}
+textarea{min-height:130px;resize:vertical;line-height:1.7}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.hero{
+  background:linear-gradient(135deg,#2f80ed,#9b51e0);color:#fff;border-radius:20px;
+  padding:26px 22px;margin-bottom:16px;box-shadow:0 10px 28px rgba(47,128,237,.28)
+}
+.hero h1{font-size:23px;margin:0 0 6px}
+.hero p{margin:0;opacity:.92;font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.tile{
+  background:#fff;border-radius:16px;padding:18px 14px;text-align:center;cursor:pointer;
+  box-shadow:0 2px 10px rgba(30,60,120,.07);transition:.18s;border:2px solid transparent
+}
+.tile:hover{transform:translateY(-3px);border-color:#cfe0ff}
+.tile .ico{font-size:30px;line-height:1}
+.tile .nm{font-weight:700;margin-top:8px;font-size:15px}
+.tile .sub{font-size:12px;color:var(--muted);margin-top:2px}
+.mcard{border-radius:16px;padding:14px 16px;margin-bottom:11px;background:#fff;
+  box-shadow:0 2px 10px rgba(30,60,120,.06);border-left:6px solid var(--blue);cursor:pointer}
+.mcard .head{display:flex;align-items:center;gap:10px;font-weight:800;font-size:16px}
+.mcard .body{display:none;margin-top:10px;font-size:14px}
+.mcard.open .body{display:block}
+.mcard .tag{display:inline-block;background:#eef3fb;color:#345;border-radius:8px;
+  padding:2px 9px;font-size:12.5px;margin:3px 5px 3px 0}
+.mcard .ex{background:#f8fbff;border-left:3px solid #cfe0ff;padding:8px 11px;
+  border-radius:8px;margin:7px 0;font-size:14px}
+.levelbar{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:14px}
+.levelbar button{
+  flex:1;min-width:150px;background:#fff;border:2px solid var(--line);border-radius:14px;
+  padding:12px;cursor:pointer;font-family:inherit;font-size:14px;font-weight:700;color:#456;
+  transition:.18s;text-align:left
+}
+.levelbar button.on{border-color:var(--blue);background:#eaf2ff;color:var(--blue)}
+.levelbar small{display:block;font-weight:400;color:var(--muted);font-size:12px;margin-top:3px}
+.drill-bar{margin-bottom:14px}
+.drill-btn{
+  width:100%;background:linear-gradient(135deg,#fff5ec,#ffe8d6);border:2px solid #ffc999;
+  border-radius:16px;padding:14px 18px;cursor:pointer;font-family:inherit;
+  font-size:16px;font-weight:800;color:#d35400;transition:.18s;text-align:left
+}
+.drill-btn:hover{border-color:#f2994a;transform:translateY(-2px)}
+.drill-btn small{display:block;font-weight:400;color:#a5673a;font-size:13px;margin-top:4px}
+.drill-empty{
+  background:#f0faf5;border:2px dashed #b7e6c8;border-radius:16px;padding:14px 18px;
+  font-size:14px;color:#1e8449;text-align:center;font-weight:600
+}
+.progress{height:12px;background:#e8eef8;border-radius:8px;overflow:hidden;margin:10px 0 6px}
+.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,#2f80ed,#27ae60);
+  border-radius:8px;transition:width .35s}
+.qbox{background:#fff;border-radius:18px;padding:20px;box-shadow:0 3px 14px rgba(30,60,120,.08)}
+.qnum{font-size:13px;color:var(--muted);margin-bottom:8px}
+.qbadge{display:inline-block;padding:4px 14px;border-radius:20px;font-size:13px;font-weight:800;margin-bottom:10px}
+.qbadge.drill{background:#fff0e6;color:#e67e22;border:1px solid #ffd9b3}
+.qbadge.master{background:#e7f8ee;color:#27ae60;border:1px solid #b7e6c8}
+.qbadge.retry{background:#fdecec;color:#c0392b;border:1px solid #f7c3c3}
+.qtext{font-size:19px;font-weight:700;line-height:1.75;margin:6px 0 18px;
+  padding:14px 16px;background:#f7faff;border-radius:12px;border-left:4px solid var(--blue)}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px}
+.opt{
+  padding:14px 10px;border-radius:13px;border:2px solid var(--line);background:#fff;
+  font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;color:#345;transition:.15s
+}
+.opt:active{transform:scale(.97)}
+.opt.ok{background:#e7f8ee;border-color:var(--green);color:var(--green)}
+.opt.no{background:#fdecec;border-color:var(--red);color:var(--red)}
+.opt:disabled{cursor:default}
+.feedback{margin-top:16px;padding:14px 16px;border-radius:13px;display:none;font-size:14.5px}
+.feedback.show{display:block}
+.feedback.good{background:#e7f8ee;border:2px solid #b7e6c8}
+.feedback.bad{background:#fdecec;border:2px solid #f7c3c3}
+.feedback.warn{background:#fff8ec;border:2px solid #ffd9a0}
+.feedback b{font-size:15px}
+.tools{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
+.tools .btn{padding:10px 16px;font-size:14px}
+.fileBtn{
+  display:inline-block;background:var(--orange);color:#fff;border-radius:12px;
+  padding:10px 16px;font-size:14px;font-weight:600;cursor:pointer;position:relative;overflow:hidden
+}
+.fileBtn input{position:absolute;inset:0;opacity:0;cursor:pointer;font-size:0}
+.hint{margin-top:10px;font-size:14px;color:var(--muted);min-height:20px}
+.hint b{color:var(--green)}
+.evt{font-size:13.5px;padding:9px 12px;border-left:3px solid #cfe0ff;background:#f8fbff;
+  border-radius:8px;margin-bottom:7px;word-break:break-all}
+.evt .tm{color:var(--muted);font-size:12px;margin-right:6px}
+.wcard{background:#f8fbff;border-radius:13px;padding:13px 15px;margin-bottom:10px;border:1px solid #e3ecfa}
+.wcard .tt{font-weight:800;color:var(--blue);margin-bottom:4px}
+.wcard .mt{font-size:12.5px;color:var(--muted);margin-top:6px}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th,td{border:1px solid var(--line);padding:8px 9px;text-align:left;vertical-align:top}
+th{background:#f4f8ff;font-weight:700}
+.badge{display:inline-block;padding:1px 8px;border-radius:20px;font-size:12px;background:#e7f8ee;color:var(--green);font-weight:700}
+.badge.b{background:#eaf2ff;color:var(--blue)}
+.badge.r{background:#fdecec;color:var(--red)}
+#toast{
+  position:fixed;left:50%;bottom:36px;transform:translateX(-50%) translateY(20px);
+  background:rgba(30,40,60,.93);color:#fff;padding:11px 22px;border-radius:24px;
+  font-size:14.5px;opacity:0;pointer-events:none;transition:.28s;z-index:999;max-width:88vw;text-align:center
+}
+#toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+.recording{background:var(--red)!important;animation:pulse 1s infinite}
+@keyframes pulse{50%{opacity:.65}}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.chip{padding:7px 14px;border-radius:20px;background:#eef3fb;color:#456;font-size:14px;
+  cursor:pointer;border:2px solid transparent;font-family:inherit}
+.chip.on{background:#eaf2ff;border-color:var(--blue);color:var(--blue);font-weight:700}
+.check{display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border-radius:11px;
+  background:#f5f8fd;margin:4px 6px 4px 0;font-size:14px;cursor:pointer;border:2px solid transparent}
+.check.on{background:#e7f8ee;border-color:var(--green);font-weight:700;color:var(--green)}
+.or-tip{
+  display:flex;align-items:center;gap:10px;justify-content:center;
+  margin:6px 0 2px;font-size:14px;color:var(--muted);font-weight:700
+}
+.or-tip::before,.or-tip::after{
+  content:"";flex:1;height:1px;background:var(--line)
+}
+@media(max-width:520px){
+  .qtext{font-size:17px}
+  .brand{font-size:17px}
+  .hero h1{font-size:20px}
+}
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <div class="brand">📚 说明方法小达人</div>
+    <nav id="nav">
+      <button data-v="home" class="on">首页</button>
+      <button data-v="learn">学习方法</button>
+      <button data-v="quiz">辨析闯关</button>
+      <button data-v="write">迁移运用</button>
+      <button data-v="record">我的记录</button>
+      <button data-v="teacher">教师端</button>
+    </nav>
+  </header>
+
+  <!-- ================= 首页 ================= -->
+  <section class="view on" id="v-home">
+    <div class="hero">
+      <h1>欢迎来到「说明方法小达人」！</h1>
+      <p>学会用说明方法，把事物说得清清楚楚、明明白白 ✨</p>
+    </div>
+
+    <div class="panel">
+      <h3>我的信息</h3>
+      <div class="row">
+        <input type="text" id="stuName" placeholder="姓名（例如：李小明）" style="flex:1;min-width:140px">
+        <input type="text" id="stuCls" placeholder="班级（例如：五(2)班）" style="flex:1;min-width:140px">
+        <button class="btn ghost" onclick="saveStudent()">保存</button>
+      </div>
+      <p class="muted" id="stuShow" style="margin-top:8px"></p>
+    </div>
+
+    <div class="grid">
+      <div class="tile" onclick="go('learn')">
+        <div class="ico">📖</div><div class="nm">学习方法</div><div class="sub">8种方法一看就懂</div>
+      </div>
+      <div class="tile" onclick="go('quiz')">
+        <div class="ico">🎯</div><div class="nm">辨析闯关</div><div class="sub">随机抽题·错题方法特训</div>
+      </div>
+      <div class="tile" onclick="go('write')">
+        <div class="ico">✍️</div><div class="nm">迁移运用</div><div class="sub">选主题或写介绍，任选其一</div>
+      </div>
+      <div class="tile" onclick="go('record')">
+        <div class="ico">📊</div><div class="nm">我的记录</div><div class="sub">看看我进步了多少</div>
+      </div>
+    </div>
+
+    <div class="panel" style="margin-top:14px">
+      <h3>学习小贴士</h3>
+      <p class="muted">
+        课标要求：阅读说明性文章，能抓住要点，了解文章的基本说明方法；<br>
+        能写简单的说明性文章，做到内容具体、语言准确。<br>
+        所以——<b>方法不是用来背的，是用来把话「说明白」的工具。</b>
+      </p>
+    </div>
+  </section>
+
+  <!-- ================= 学习方法 ================= -->
+  <section class="view" id="v-learn">
+    <h2>📖 八种说明方法</h2>
+    <p class="muted" style="margin-bottom:14px">点一点卡片，看看每种方法长什么样、有什么「小标记」。</p>
+    <div id="methodList"></div>
+  </section>
+
+  <!-- ================= 辨析闯关 ================= -->
+  <section class="view" id="v-quiz">
+    <h2>🎯 辨析闯关</h2>
+    <div class="levelbar" id="levelBar"></div>
+    <div class="drill-bar" id="drillBar"></div>
+
+    <div id="quizWrap">
+      <div class="panel" id="quizIntro">
+        <p><b>怎么玩：</b>每一关都会从题库里<b>随机抽出几道题</b>。答错不要紧——系统会记住你没掌握的<b>说明方法</b>，在「方法特训」里用<b>同一方法的不同题目</b>反复练，<b>连续答对3道不同题目</b>才算真正掌握。</p>
+        <p class="muted">通关后点「再来一轮」会换新题；点「方法特训」可以专门练还没掌握的方法。</p>
+        <p class="muted">选一个关卡开始吧！</p>
+      </div>
+
+      <div class="qbox" id="qbox" style="display:none">
+        <div class="row" style="justify-content:space-between">
+          <div class="qnum" id="qnum"></div>
+          <div class="qnum" id="qstreak"></div>
+        </div>
+        <div class="progress"><i id="pbar"></i></div>
+        <div class="qnum" id="qstat"></div>
+        <div class="qbadge" id="qbadge" style="display:none"></div>
+        <div class="qtext" id="qtext"></div>
+        <div class="opts" id="opts"></div>
+        <div class="feedback" id="feedback"></div>
+        <div class="tools" id="qtools" style="display:none">
+          <button class="btn" id="nextBtn">继续练习 →</button>
+          <button class="btn gray" onclick="showMethodHelp()">看看方法说明</button>
+          <button class="btn ghost" id="endDrillBtn" onclick="endDrill()" style="display:none">结束特训</button>
+        </div>
+      </div>
+
+      <div class="qbox" id="qdone" style="display:none;text-align:center">
+        <div style="font-size:52px" id="doneIcon">🎉</div>
+        <h2 style="margin:8px 0" id="doneTitle">本轮完成！</h2>
+        <p class="muted" id="doneStat"></p>
+        <div class="tools" style="justify-content:center;margin-top:16px" id="doneBtns"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 迁移运用 ================= -->
+  <section class="view" id="v-write">
+    <h2>✍️ 迁移运用：我来说明</h2>
+
+    <div class="panel" style="background:#f8fbff;border:2px dashed #cfe0ff">
+      <p style="margin:0;font-weight:700;color:var(--blue)">
+        💡 下面两步<b>任选其一</b>就可以提交：
+      </p>
+      <p class="muted" style="margin:6px 0 0">
+        ① 只选一个主题（先想好要介绍什么）；<br>
+        ② 只写下你的介绍（直接开写，不用先选主题）；<br>
+        ③ 当然，两步都完成也可以～
+      </p>
+    </div>
+
+    <div class="panel">
+      <h3>第一步（可选）：选一个主题</h3>
+      <div class="chips" id="topicChips"></div>
+      <input type="text" id="topicInput" placeholder="也可以自己拟一个主题，例如：我们的校园、我家的扫地机器人…">
+      <p class="muted" style="margin-top:8px">点一下已选中的主题可以取消选择。</p>
+    </div>
+
+    <div class="or-tip">或</div>
+
+    <div class="panel">
+      <h3>第二步（可选）：写下你的介绍</h3>
+      <p class="muted">不会打字没关系——用 🎤 语音说，或者 📷 把写好的作业拍下来识别。</p>
+      <textarea id="writingBox" placeholder="在这里介绍你选的事物（也可以不选主题，直接写）。想一想：它是什么样子的？有多大？有什么特点？可以举什么例子？"></textarea>
+      <div class="tools">
+        <button class="btn red" id="voiceBtn" onclick="toggleVoice('writingBox',this)">🎤 语音输入</button>
+        <label class="fileBtn">📷 拍照/上传识别
+          <input type="file" accept="image/*" multiple capture="environment"
+                 onchange="handleOcr(this.files,'writingBox')">
+        </label>
+        <button class="btn ghost" onclick="checkWriting()">🔍 检测我用了哪些方法</button>
+      </div>
+      <div class="hint" id="ocrHint"></div>
+      <div class="hint" id="writeHint"></div>
+    </div>
+
+    <div class="panel">
+      <h3>第三步（可选）：自查</h3>
+      <p class="muted">如果你的介绍里用了说明方法，可以勾出来（可多选）。</p>
+      <div id="selfMethods"></div>
+      <div class="tools" style="margin-top:14px">
+        <button class="btn green" onclick="saveWriting()">✅ 提交我的作品</button>
+      </div>
+      <p class="muted" style="margin-top:8px">提示：只选主题或只写介绍，都可以提交。</p>
+    </div>
+  </section>
+
+  <!-- ================= 我的记录 ================= -->
+  <section class="view" id="v-record">
+    <h2>📊 我的记录</h2>
+    <div class="panel">
+      <h3>掌握情况</h3>
+      <div id="recStat"></div>
+    </div>
+    <div class="panel">
+      <h3>待强化的说明方法</h3>
+      <div id="recDrill"></div>
+    </div>
+    <div class="panel">
+      <h3>我的作品与选题</h3>
+      <div id="recWritings"></div>
+    </div>
+    <div class="panel">
+      <h3>学习轨迹（最近 60 条）</h3>
+      <div id="recEvents"></div>
+      <div class="tools" style="margin-top:12px">
+        <button class="btn ghost" onclick="exportData()">⬇️ 导出我的数据（交给老师）</button>
+        <button class="btn gray" onclick="clearData()">清空重来</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 教师端 ================= -->
+  <section class="view" id="v-teacher">
+    <h2>👩‍🏫 教师端</h2>
+    <div class="panel">
+      <h3>导入学生数据</h3>
+      <p class="muted">学生在「我的记录」里点「导出我的数据」，会得到一个 .json 文件。在这里导入即可查看。</p>
+      <div class="tools">
+        <label class="fileBtn">📁 导入学生 json
+          <input type="file" accept=".json,application/json" multiple onchange="teacherImport(this.files)">
+        </label>
+        <button class="btn ghost" onclick="teacherExportAll()">⬇️ 导出汇总</button>
+        <button class="btn gray" onclick="teacherClear()">清空列表</button>
+      </div>
+      <textarea id="teacherPaste" placeholder="也可以直接把学生发来的数据粘贴在这里，然后点「解析」" style="margin-top:10px;min-height:80px"></textarea>
+      <div class="tools"><button class="btn ghost" onclick="teacherPasteParse()">解析粘贴内容</button></div>
+    </div>
+    <div class="panel">
+      <h3>学生情况总览</h3>
+      <div id="teacherTable"><p class="muted">还没有导入数据。</p></div>
+    </div>
+    <div class="panel">
+      <h3>学生作品与选题</h3>
+      <div id="teacherWritings"><p class="muted">—</p></div>
+    </div>
+  </section>
+</div>
+
+<div id="toast"></div>
+
+<script>
+/* =====================================================================
+   0. 基础工具
+   ===================================================================== */
+const $  = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+const esc = s => String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+let toastTimer=null;
+function toast(msg){
+  const t=$('#toast'); t.textContent=msg; t.classList.add('on');
+  clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('on'),2200);
+}
+function fmtTime(ts){
+  const d=new Date(ts);
+  const p=n=>String(n).padStart(2,'0');
+  return `${d.getMonth()+1}/${d.getDate()} ${p(d.getHours())}:${p(d.getMinutes())}`;
+}
+
+/* =====================================================================
+   1. 数据存储
+   ===================================================================== */
+const KEY='sm_data_v2';
+let DB = loadDB();
+
+function loadDB(){
+  try{
+    const d = JSON.parse(localStorage.getItem(KEY));
+    if(d && typeof d==='object'){
+      d.student   = d.student   || {name:'',cls:''};
+      d.events    = d.events    || [];
+      d.progress  = d.progress  || {};
+      d.progress.all = d.progress.all || [];
+      d.writings  = d.writings  || [];
+      d.wrongStat = d.wrongStat || {};
+      d.needDrill = d.needDrill || {};
+      return d;
+    }
+  }catch(e){}
+  return {student:{name:'',cls:''},events:[],progress:{all:[]},writings:[],wrongStat:{},needDrill:{},createdAt:Date.now()};
+}
+function saveDB(){
+  try{ localStorage.setItem(KEY, JSON.stringify(DB)); }
+  catch(e){ console.warn('存储失败',e); }
+}
+function logEvent(type,detail){
+  DB.events.push({t:Date.now(),type,detail});
+  if(DB.events.length>2500) DB.events.splice(0, DB.events.length-2500);
+  saveDB();
+}
+function markCorrectQid(qid){
+  if(!DB.progress.all) DB.progress.all=[];
+  const s=new Set(DB.progress.all);
+  s.add(qid);
+  DB.progress.all=Array.from(s);
+}
+
+/* =====================================================================
+   2. 说明方法资料
+   ===================================================================== */
+const METHODS = {
+  '列数字': {
+    icon:'🔢', color:'#2f80ed',
+    def:'用具体的数字来说明事物的特点，让说明更准确、更有说服力。',
+    marks:['具体的数字：一米、五千五百摄氏度','约、左右、多达、长达、超过','百分数、倍数、分数'],
+    ex:['太阳离我们约有一亿五千万公里。','长江全长约六千三百公里。'],
+    tip:'注意：这些数字一定是在「说明」事物，而不是在讲故事的时间。'
+  },
+  '作比较': {
+    icon:'⚖️', color:'#f2994a',
+    def:'把两个（或几个）事物放在一起比一比，用熟悉的东西说明陌生的东西。',
+    marks:['比、不如、相当于、相当于…那么','跟/和/与…相比、比…得多/好几倍','像…一样重/大/高（用来比大小，不是打比方）'],
+    ex:['鲸的一条舌头就有十几头大肥猪那么重。','地球上的海洋面积比陆地面积大得多。'],
+    tip:'作比较是「拿两个东西比大小」，打比方是「用一个东西像另一个东西」，别混了！'
+  },
+  '举例子': {
+    icon:'📌', color:'#27ae60',
+    def:'举出具体的、有代表性的事例，让读者一下子就明白。',
+    marks:['比如、例如、譬如、如、像…这样的','有一回、曾经、据说…（具体事例）'],
+    ex:['有些动物特别能睡，比如蝙蝠和刺猬。','我国的传统节日很多，像春节、端午节、中秋节都很热闹。'],
+    tip:'举例子常常出现在「很多、有些、种类多」这样的概括之后。'
+  },
+  '打比方': {
+    icon:'☁️', color:'#9b51e0',
+    def:'用比喻的方法来说明，把陌生的事物比作熟悉的、形象的事物。',
+    marks:['像、好像、仿佛、如同、犹如、似的','像…一样（是为了形象，不是为了比大小）'],
+    ex:['地球像一颗晶莹的蓝宝石，静静地悬在太空中。','松鼠的尾巴翘起来，像一把打开的小伞。'],
+    tip:'判断打比方的小窍门：去掉比喻，句子还说得通，但就不形象了。'
+  },
+  '分类别': {
+    icon:'🗂️', color:'#e91e63',
+    def:'按照一定的标准，把事物分成几类，一类一类地说明。',
+    marks:['分为、分成、可以分为、大致分为','一类是…另一类是…、按…来分'],
+    ex:['垃圾可以分为可回收物、有害垃圾、厨余垃圾和其他垃圾。','动物按有没有脊柱，可以分为脊椎动物和无脊椎动物。'],
+    tip:'分类别必须有「分类标准」，而且分出来的类不能重复、不能遗漏。'
+  },
+  '作诠释': {
+    icon:'📖', color:'#8d6e63',
+    def:'解释说明一个概念「是什么」「是怎么回事」，把意思讲清楚。',
+    marks:['是…（一种/一类）','叫做、称为、所谓、指的是、就是','什么是X？X就是…'],
+    ex:['化石是保存在岩层里的古代生物的遗体或遗迹。','什么是雾？雾就是悬浮在近地面空气中的小水滴。'],
+    tip:'作诠释＝解释说明，和「下定义」很接近，小学阶段都归入这一类。'
+  },
+  '引用': {
+    icon:'💬', color:'#00a3a3',
+    def:'引用名言、古诗、谚语、资料、数据来说明，让说明更有说服力。',
+    marks:['俗话说、古人云、谚语说、诗中说','据记载、有研究表明、科学家说、……中记载'],
+    ex:['俗话说「瑞雪兆丰年」，冬天的雪对庄稼很有好处。','《本草纲目》中记载：「菊花味甘苦，能清热解毒。」'],
+    tip:'看到引号里的名言、诗句、谚语，多半就是「引用」。'
+  },
+  '列图表': {
+    icon:'📊', color:'#607d8b',
+    def:'用表格、示意图、柱状图、地图等把信息直观地展示出来。',
+    marks:['表格、图、示意图、柱状图、扇形图、折线图','地图、流程图、结构图'],
+    ex:['作者画了一张表格，列出了各种动物的奔跑速度。','课文用一张柱状图对比了几座名山的高度。'],
+    tip:'图表能让复杂的信息一眼看清，是说明文的好帮手。'
+  }
+};
+const METHOD_NAMES = Object.keys(METHODS);
+
+/* =====================================================================
+   3. 题库（117 题）
+   ===================================================================== */
+const BANK = [
+/* ---------- 列数字（15） ---------- */
+{l:1,t:"太阳离我们约有一亿五千万公里。",a:"列数字",e:"「一亿五千万公里」是具体数字，用数据准确地说明太阳离地球非常远。"},
+{l:1,t:"这座古塔高五十六米，一共有十三层。",a:"列数字",e:"「五十六米」「十三层」都是具体数字，说明古塔的高度和层数。"},
+{l:1,t:"一头成年蓝鲸的体重可达一百八十吨。",a:"列数字",e:"用「一百八十吨」这个数字说明蓝鲸非常重。"},
+{l:1,t:"长江全长约六千三百公里。",a:"列数字",e:"「约六千三百公里」用数字说明长江很长。"},
+{l:1,t:"人的一生大约有三分之一的时间是在睡眠中度过的。",a:"列数字",e:"用「三分之一」这个分数说明睡眠占人生时间的比例。"},
+{l:1,t:"这棵银杏树已经生长了八百多年。",a:"列数字",e:"「八百多年」用数字说明银杏树活得很久。"},
+{l:1,t:"地球的表面积约为五点一亿平方公里。",a:"列数字",e:"「五点一亿平方公里」是具体数字，说明地球表面积的大小。"},
+{l:1,t:"蜂鸟的心跳每分钟可达一千二百次。",a:"列数字",e:"「一千二百次」「每分钟」用数字说明蜂鸟心跳非常快。"},
+{l:1,t:"这座水库可以蓄水两亿立方米。",a:"列数字",e:"「两亿立方米」用数字说明水库的容量。"},
+{l:1,t:"从地球到月球的距离约为三十八万四千公里。",a:"列数字",e:"用「三十八万四千公里」这一数字说明地月距离。"},
+{l:1,t:"赵州桥修建于公元六百年左右。",a:"列数字",e:"「公元六百年」用具体的年份说明建桥时间。"},
+{l:1,t:"这具恐龙化石长约二十米，高约八米。",a:"列数字",e:"「二十米」「八米」用数字说明恐龙化石的大小。"},
+{l:1,t:"空气里大约含有百分之七十八的氮气。",a:"列数字",e:"「百分之七十八」用百分数说明氮气在空气中的含量。"},
+{l:1,t:"一棵成年的苹果树，一年能结两百多斤果子。",a:"列数字",e:"「两百多斤」用数字说明苹果树的产量。"},
+{l:1,t:"这种新型电池的使用寿命长达十年。",a:"列数字",e:"「长达十年」用数字说明电池能用很久。"},
+
+/* ---------- 作比较（15） ---------- */
+{l:1,t:"鲸的一条舌头就有十几头大肥猪那么重。",a:"作比较",e:"把鲸的舌头和「十几头大肥猪」比重量，让读者一下子感受到鲸有多大。"},
+{l:1,t:"太阳表面的温度比开水要高得多。",a:"作比较",e:"拿大家熟悉的「开水」来比，说明太阳表面温度极高。"},
+{l:1,t:"地球上的海洋面积比陆地面积大得多。",a:"作比较",e:"把海洋面积和陆地面积放在一起比，说明海洋更大。"},
+{l:1,t:"这头大象的体重相当于五辆小汽车。",a:"作比较",e:"用「五辆小汽车」作比较，让大象的体重变得可以想象。"},
+{l:1,t:"松鼠不像山鼠那样一到冬天就蛰伏不动。",a:"作比较",e:"把松鼠和山鼠放在一起比较，突出松鼠冬天也很活跃。"},
+{l:1,t:"和普通玻璃相比，这种钢化玻璃结实得多。",a:"作比较",e:"用「和……相比」作比较，说明钢化玻璃更结实。"},
+{l:1,t:"高铁的速度比普通火车快了好几倍。",a:"作比较",e:"把高铁和普通火车作比较，说明高铁非常快。"},
+{l:1,t:"用这种材料做的杯子，比纸杯保温效果好多了。",a:"作比较",e:"拿纸杯来比较，说明这种杯子的保温性能更好。"},
+{l:1,t:"狗的鼻子比人的鼻子灵敏得多。",a:"作比较",e:"把狗的鼻子和人的鼻子作比较，说明狗嗅觉厉害。"},
+{l:1,t:"这种细菌的直径比头发丝还细。",a:"作比较",e:"用「头发丝」来比较，说明细菌极小，让人一下子明白。"},
+{l:1,t:"和沙漠相比，热带雨林里的空气湿润得多。",a:"作比较",e:"把雨林和沙漠放在一起比，突出雨林空气湿润。"},
+{l:1,t:"一只蜂鸟的体重还不如一枚硬币重。",a:"作比较",e:"用「一枚硬币」作比较，说明蜂鸟非常轻。"},
+{l:1,t:"木星的体积比地球大得多。",a:"作比较",e:"把木星和地球比体积，说明木星很大。"},
+{l:1,t:"这座桥的跨度比三个足球场连起来还长。",a:"作比较",e:"用「三个足球场」作比较，让桥的长度可以被想象出来。"},
+{l:1,t:"这颗中子星的质量比太阳大得多。",a:"作比较",e:"把中子星和太阳比质量，说明它极其致密、质量巨大。"},
+
+/* ---------- 举例子（15） ---------- */
+{l:1,t:"我国有许多著名的古代建筑，比如故宫、长城和赵州桥。",a:"举例子",e:"「比如故宫、长城和赵州桥」举出具体例子，让「著名古代建筑」变得具体。"},
+{l:1,t:"有些动物特别能睡，比如蝙蝠和刺猬。",a:"举例子",e:"用「蝙蝠和刺猬」这两个例子说明「有些动物特别能睡」。"},
+{l:1,t:"水果的种类很多，像苹果、香蕉、西瓜都是我们常吃的。",a:"举例子",e:"举出苹果、香蕉、西瓜，具体说明水果种类多。"},
+{l:1,t:"有的植物会「运动」，例如向日葵会跟着太阳转动。",a:"举例子",e:"用向日葵这个例子说明植物也会「运动」。"},
+{l:1,t:"地球上有很多自然灾害，例如地震、洪水和台风。",a:"举例子",e:"举出地震、洪水、台风，具体说明自然灾害的种类。"},
+{l:1,t:"许多昆虫都会发光，如萤火虫。",a:"举例子",e:"用萤火虫这个例子说明昆虫会发光。"},
+{l:1,t:"我国的传统节日很多，像春节、端午节、中秋节都很热闹。",a:"举例子",e:"举出三个节日，具体说明传统节日多。"},
+{l:1,t:"有些植物的根可以吃，比如萝卜和红薯。",a:"举例子",e:"用萝卜、红薯作例子，说明植物的根可以吃。"},
+{l:1,t:"鸟类中也有不会飞的，例如鸵鸟和企鹅。",a:"举例子",e:"用鸵鸟、企鹅作例子，说明鸟不一定都会飞。"},
+{l:1,t:"很多发明都来自生活，像鲁班发明锯子、瓦特改良蒸汽机。",a:"举例子",e:"举出两个发明故事作例子，说明「发明来自生活」。"},
+{l:1,t:"有些树能活很久，比如银杏和红杉。",a:"举例子",e:"用银杏和红杉作例子，说明有的树寿命很长。"},
+{l:1,t:"沙漠里的动植物各有各的生存办法，例如仙人掌把叶子变成了刺。",a:"举例子",e:"用仙人掌这个例子，具体说明沙漠植物的生存智慧。"},
+{l:1,t:"汉字中有很多形声字，比如「清」「晴」「请」。",a:"举例子",e:"举出三个形声字作例子，说明形声字很多。"},
+{l:1,t:"有些动物会冬眠，如青蛙、蛇和熊。",a:"举例子",e:"用青蛙、蛇、熊作例子，说明动物会冬眠。"},
+{l:1,t:"我国有很多有名的湖泊，如青海湖、鄱阳湖、洞庭湖。",a:"举例子",e:"举出三个湖泊的名称，具体说明我国湖泊多。"},
+
+/* ---------- 打比方（15） ---------- */
+{l:1,t:"地球像一颗晶莹的蓝宝石，静静地悬在太空中。",a:"打比方",e:"把地球比作「蓝宝石」，形象生动地写出地球的样子。"},
+{l:1,t:"松鼠的尾巴翘起来，像一把打开的小伞。",a:"打比方",e:"把尾巴比作「小伞」，让读者立刻想到尾巴的样子。"},
+{l:1,t:"弯弯的月亮像一只小船挂在夜空里。",a:"打比方",e:"把月亮比作「小船」，形象地写出月亮的形状。"},
+{l:1,t:"太阳像个大火球，散发着光和热。",a:"打比方",e:"把太阳比作「大火球」，形象说明太阳又热又亮。"},
+{l:1,t:"大象的耳朵像两把大蒲扇。",a:"打比方",e:"把大象耳朵比作「蒲扇」，生动写出耳朵又大又扁。"},
+{l:1,t:"长颈鹿的脖子像一根长长的吊车杆。",a:"打比方",e:"把脖子比作「吊车杆」，形象说明脖子又长又直。"},
+{l:1,t:"一朵朵白云像棉花糖一样飘在天上。",a:"打比方",e:"把白云比作「棉花糖」，形象地写出云的形状和颜色。"},
+{l:1,t:"细胞的形状像一个个小格子。",a:"打比方",e:"把细胞比作「小格子」，让抽象的形状变得好懂。"},
+{l:1,t:"银河系像一个巨大的漩涡，缓缓地转动。",a:"打比方",e:"把银河系比作「漩涡」，形象说明它的形状。"},
+{l:1,t:"骆驼的驼峰像一个小仓库，储存着脂肪。",a:"打比方",e:"把驼峰比作「小仓库」，形象说明它储存养料的作用。"},
+{l:1,t:"雷达的天线像一口大锅。",a:"打比方",e:"把天线比作「大锅」，生动写出天线的形状。"},
+{l:1,t:"蜘蛛网像一张精巧的小渔网。",a:"打比方",e:"把蜘蛛网比作「渔网」，形象说明它的样子。"},
+{l:1,t:"树叶上的露珠像一颗颗珍珠。",a:"打比方",e:"把露珠比作「珍珠」，形象写出露珠晶莹圆润的样子。"},
+{l:1,t:"银杏树的叶子像一把把小扇子。",a:"打比方",e:"把叶子比作「小扇子」，生动写出叶子的形状。"},
+{l:1,t:"蚂蚁的触角像两根小天线。",a:"打比方",e:"把触角比作「小天线」，形象说明它的形状和功能。"},
+
+/* ---------- 分类别（12） ---------- */
+{l:2,t:"图书馆的书分为文学、科学、历史三大类。",a:"分类别",e:"按学科把书分成三类，一类一类说明，条理很清楚。"},
+{l:2,t:"动物按有没有脊柱，可以分为脊椎动物和无脊椎动物。",a:"分类别",e:"按「有没有脊柱」这个标准，把动物分成两类。"},
+{l:2,t:"垃圾可以分为可回收物、有害垃圾、厨余垃圾和其他垃圾。",a:"分类别",e:"按处理方式把垃圾分成四类，清清楚楚。"},
+{l:2,t:"植物可以分为藻类植物、苔藓植物、蕨类植物和种子植物。",a:"分类别",e:"按进化顺序把植物分成几大类来介绍。"},
+{l:2,t:"云可以分为积云、层云和卷云三大类。",a:"分类别",e:"按形状把云分成三类，一类一类说明。"},
+{l:2,t:"交通工具可以分为陆上交通工具、水上交通工具和空中交通工具。",a:"分类别",e:"按运行空间把交通工具分成三类。"},
+{l:2,t:"汉字按照结构可以分为独体字和合体字。",a:"分类别",e:"按「结构」这个标准把汉字分成两类。"},
+{l:2,t:"声音可以分为乐音和噪音两类。",a:"分类别",e:"把声音分成两类来说明，条理分明。"},
+{l:2,t:"岩石按照成因可以分为岩浆岩、沉积岩和变质岩。",a:"分类别",e:"按形成原因把岩石分成三类。"},
+{l:2,t:"我们学校的社团分为体育类、艺术类和科技类。",a:"分类别",e:"把社团分成三类，一类一类地说。"},
+{l:2,t:"星星按亮度可以分成不同的星等。",a:"分类别",e:"按亮度把星星分成若干等级来说明。"},
+{l:2,t:"图书按用途可以分为工具书、教科书和课外读物。",a:"分类别",e:"按用途把图书分成三类，清楚明白。"},
+
+/* ---------- 作诠释（12） ---------- */
+{l:2,t:"恐龙是生活在远古时代的一类爬行动物。",a:"作诠释",e:"解释「恐龙是什么」，说明它的类别和时代。"},
+{l:2,t:"光合作用就是绿色植物利用阳光把水和二氧化碳制成有机物的过程。",a:"作诠释",e:"解释「光合作用是怎么回事」，把概念讲清楚。"},
+{l:2,t:"哺乳动物是全身长毛、用肺呼吸、靠吃奶长大的动物。",a:"作诠释",e:"解释「哺乳动物是什么样的一类动物」。"},
+{l:2,t:"所谓「温室效应」，是指大气中的二氧化碳等气体让地球表面温度升高的现象。",a:"作诠释",e:"用「是指……」解释「温室效应」这个名词的意思。"},
+{l:2,t:"陨石就是从宇宙空间落到地球上的石块。",a:"作诠释",e:"解释「陨石是什么」，说清它的来源。"},
+{l:2,t:"地震是地壳快速震动、释放能量的现象。",a:"作诠释",e:"解释地震到底是什么现象。"},
+{l:2,t:"化石是保存在岩层里的古代生物的遗体或遗迹。",a:"作诠释",e:"解释「化石是什么」，把概念说明白。"},
+{l:2,t:"湿度就是空气里含有水汽的多少。",a:"作诠释",e:"用「就是……」解释「湿度」的意思。"},
+{l:2,t:"什么是雾？雾就是悬浮在近地面空气中的小水滴。",a:"作诠释",e:"先提问再解释，说明「雾是什么」。"},
+{l:2,t:"回声是声音遇到障碍物反射回来的现象。",a:"作诠释",e:"解释「回声」是怎么产生的。"},
+{l:2,t:"电脑病毒是一种能自我复制、破坏计算机程序的小程序。",a:"作诠释",e:"解释电脑病毒是什么，说清它的特点。"},
+{l:2,t:"近视是指看远处的东西模糊、看近处的东西清楚的一种眼睛状况。",a:"作诠释",e:"用「是指……」解释「近视」的意思。"},
+
+/* ---------- 引用（13） ---------- */
+{l:2,t:"俗话说「瑞雪兆丰年」，冬天的雪对庄稼很有好处。",a:"引用",e:"引用俗语来说明冬雪对庄稼的好处，更有说服力。"},
+{l:2,t:"「一年之计在于春」，春天是播种的好时候。",a:"引用",e:"引用古语说明春天的重要，让人信服。"},
+{l:2,t:"李白在诗中说「飞流直下三千尺」，庐山瀑布果然壮观。",a:"引用",e:"引用李白的诗句来描写瀑布，说明更有味道。"},
+{l:2,t:"科学家说：「水是生命之源。」",a:"引用",e:"引用科学家的话来说明水的重要。"},
+{l:2,t:"《本草纲目》中记载：「菊花味甘苦，能清热解毒。」",a:"引用",e:"引用古书中的记载来说明菊花的功效。"},
+{l:2,t:"古人云：「书山有路勤为径。」",a:"引用",e:"引用古人的话来说明勤奋的重要。"},
+{l:2,t:"农谚说「清明前后，种瓜点豆」，这是农民长期积累的经验。",a:"引用",e:"引用农谚说明播种的时节。"},
+{l:2,t:"有研究表明，「每天运动一小时能让身体更健康」。",a:"引用",e:"引用研究结论来说明运动的好处。"},
+{l:2,t:"俗话说「早霞不出门，晚霞行千里」，看云可以预测天气。",a:"引用",e:"引用俗语说明云和天气的关系。"},
+{l:2,t:"农谚讲「麦怕胎里旱」，小麦出苗时最需要水分。",a:"引用",e:"引用农谚说明小麦出苗期需要水分。"},
+{l:2,t:"正如杜甫诗中所说「润物细无声」，春雨悄悄地滋润着大地。",a:"引用",e:"引用杜甫的诗句，形象说明春雨的细腻。"},
+{l:2,t:"《十万个为什么》里写道：「蜜蜂靠跳舞来传递信息。」",a:"引用",e:"引用书中的话来说明蜜蜂的交流方式。"},
+{l:2,t:"谚语说「瑞雪兆丰年」，冬雪对庄稼很有好处。",a:"引用",e:"引用谚语来说明冬雪的好处，更有说服力。"},
+
+/* ---------- 列图表（10） ---------- */
+{l:2,t:"作者画了一张表格，列出了各种动物的奔跑速度。",a:"列图表",e:"用表格把数据排整齐，一眼就能比较出快慢。"},
+{l:2,t:"课文用一张柱状图对比了几座名山的高度。",a:"列图表",e:"用柱状图直观地比出几座山的高低。"},
+{l:2,t:"说明书上画了一张结构示意图，标出了各个零件的位置。",a:"列图表",e:"用示意图直观地展示零件位置，比文字更好懂。"},
+{l:2,t:"文章用扇形图表示各类垃圾所占的比例。",a:"列图表",e:"用扇形图直观地显示各类垃圾占多少。"},
+{l:2,t:"课本里附了一张地图，标出了长江流经的省份。",a:"列图表",e:"用地图直观地展示长江流经的地方。"},
+{l:2,t:"作者用一个流程图来说明造纸的步骤。",a:"列图表",e:"用流程图把步骤按顺序排好，清楚明白。"},
+{l:2,t:"课文用一张饼图展示班级同学最喜欢的运动项目比例。",a:"列图表",e:"用饼图直观地显示各项运动所占的比例。"},
+{l:2,t:"说明书上的装配图清楚地标出了每个零件的编号。",a:"列图表",e:"用装配图直观地展示零件的位置和编号。"},
+{l:2,t:"课文用一张对比表列出了三种电池的优缺点。",a:"列图表",e:"用对比表把三种电池的优缺点排在一起，一目了然。"},
+{l:2,t:"地图上用不同颜色标出了各个国家的位置。",a:"列图表",e:"用地图直观地展示各国的位置。"},
+
+/* ---------- 补充混合题（10） ---------- */
+{l:1,t:"这座大桥每天要通行八万辆汽车。",a:"列数字",e:"「八万辆」用数字说明大桥的车流量很大。"},
+{l:1,t:"鲸的鼻孔长在头顶上，喷出的水柱就像两个小喷泉。",a:"打比方",e:"把水柱比作「小喷泉」，形象生动。"},
+{l:1,t:"有些鸟能飞越珠穆朗玛峰，例如斑头雁。",a:"举例子",e:"用斑头雁这个例子说明鸟能飞得很高。"},
+{l:2,t:"电视机按屏幕类型可以分为液晶电视、OLED电视等。",a:"分类别",e:"按屏幕类型把电视机分成几类来说明。"},
+{l:2,t:"什么是彩虹？彩虹是阳光照射到空气中的小水滴后形成的彩色光弧。",a:"作诠释",e:"先提问再解释，说明「彩虹是什么」。"},
+{l:2,t:"古人说「春江水暖鸭先知」，鸭子确实对水温很敏感。",a:"引用",e:"引用诗句来说明鸭子对水温敏感。"},
+{l:2,t:"这张折线图显示了近十年气温的变化。",a:"列图表",e:"用折线图直观地展示气温变化趋势。"},
+{l:1,t:"一颗氢弹的威力相当于几百万吨炸药。",a:"作比较",e:"用「几百万吨炸药」作比较，说明威力巨大。"},
+{l:1,t:"地球绕太阳一圈需要三百六十五天。",a:"列数字",e:"「三百六十五天」用数字说明地球公转的时间。"},
+{l:1,t:"松树的叶子像一根根绿色的针。",a:"打比方",e:"把松针比作「绿色的针」，形象地写出叶子的形状。"}
+];
+
+/* 关卡配置 */
+const LEVELS = {
+  1:{name:'第一关 · 基础四法', sub:'列数字 / 作比较 / 举例子 / 打比方', methods:['列数字','作比较','举例子','打比方']},
+  2:{name:'第二关 · 进阶四法', sub:'分类别 / 作诠释 / 引用 / 列图表', methods:['分类别','作诠释','引用','列图表']},
+  3:{name:'终极挑战 · 全部八法', sub:'八种方法混着来，看看你行不行', methods:METHOD_NAMES}
+};
+const ROUND_SIZE = {1:8, 2:8, 3:10};
+const DRILL_TARGET = 3;
+
+/* 某方法在题库中的所有题号 */
+function methodQids(method){
+  return BANK.map((q,i)=>i).filter(i=>BANK[i].a===method);
+}
+
+/* =====================================================================
+   4. 视图切换
+   ===================================================================== */
+function go(v){
+  $$('.view').forEach(el=>el.classList.remove('on'));
+  const target = document.getElementById('v-'+v);
+  if(target) target.classList.add('on');
+  $$('#nav button').forEach(b=>b.classList.toggle('on', b.dataset.v===v));
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(v==='record') renderRecord();
+  if(v==='learn')  renderMethods();
+  if(v==='quiz')   renderLevelBar();
+  if(v==='write')  renderWriteView();
+}
+$$('#nav button').forEach(b=>b.onclick=()=>go(b.dataset.v));
+
+/* =====================================================================
+   5. 首页信息
+   ===================================================================== */
+function saveStudent(){
+  const n=$('#stuName').value.trim(), c=$('#stuCls').value.trim();
+  DB.student={name:n,cls:c};
+  saveDB();
+  renderStudent();
+  toast('已保存你的信息 ✔');
+  logEvent('info',{name:n,cls:c});
+}
+function renderStudent(){
+  const s=DB.student||{};
+  $('#stuName').value=s.name||'';
+  $('#stuCls').value=s.cls||'';
+  $('#stuShow').textContent = s.name
+    ? `当前学生：${s.cls||''} ${s.name}`
+    : '还没填写信息，填好后老师才能看到你的学习记录哦。';
+}
+
+/* =====================================================================
+   6. 学习方法页
+   ===================================================================== */
+function renderMethods(){
+  const box=$('#methodList');
+  if(box.dataset.done) return;
+  box.innerHTML = METHOD_NAMES.map(n=>{
+    const m=METHODS[n];
+    return `<div class="mcard" style="border-left-color:${m.color}" onclick="this.classList.toggle('open')">
+      <div class="head"><span style="font-size:22px">${m.icon}</span>
+        <span style="color:${m.color}">${n}</span>
+        <span class="muted" style="font-size:13px;font-weight:400">（点击展开）</span>
+      </div>
+      <div class="body">
+        <p><b>什么意思：</b>${esc(m.def)}</p>
+        <p style="margin-top:8px"><b>有哪些「小标记」：</b></p>
+        <div>${m.marks.map(x=>`<span class="tag">${esc(x)}</span>`).join('')}</div>
+        <p style="margin-top:10px"><b>举个例子：</b></p>
+        ${m.ex.map(e=>`<div class="ex">${esc(e)}</div>`).join('')}
+        <p style="margin-top:8px;color:#c0392b"><b>小提醒：</b>${esc(m.tip)}</p>
+      </div>
+    </div>`;
+  }).join('');
+  box.dataset.done='1';
+}
+
+/* =====================================================================
+   7. 普通闯关
+   ===================================================================== */
+const Q = { level:1, round:[], queue:[], done:new Set(), cur:null, locked:false, active:false, roundNo:0 };
+
+function levelIds(lv){
+  return BANK.map((q,i)=>i).filter(i=> lv===3 ? true : BANK[i].l===lv);
+}
+
+function pickRound(lv, n){
+  const pool = levelIds(lv);
+  const total = Math.min(n, pool.length);
+  const needDrillMethods = Object.keys(DB.needDrill||{});
+  const wrongMethodPool = pool.filter(i => needDrillMethods.includes(BANK[i].a));
+  const normalPool = pool.filter(i => !needDrillMethods.includes(BANK[i].a));
+
+  const half = Math.min(Math.floor(total/2), wrongMethodPool.length);
+  const picked = shuffle(wrongMethodPool).slice(0, half);
+  let res = picked.concat(shuffle(normalPool).slice(0, total - picked.length));
+  if(res.length < total){
+    const remain = shuffle(wrongMethodPool.filter(i=>!picked.includes(i)));
+    res = res.concat(remain.slice(0, total - res.length));
+  }
+  return shuffle(res);
+}
+
+function renderLevelBar(){
+  const bar=$('#levelBar');
+  bar.innerHTML = Object.keys(LEVELS).map(k=>{
+    const L=LEVELS[k];
+    const n = ROUND_SIZE[k];
+    const on = (!D.active && Q.level==k && Q.active) ? 'on' : '';
+    return `<button class="${on}" onclick="startRound(${k})">
+      ${L.name}<small>${L.sub}<br>每轮随机抽 ${n} 题 · 答错的方法会进入特训<br>
+      <span style="color:#eb5757">待强化方法 ${Object.keys(DB.needDrill||{}).length} 个</span></small></button>`;
+  }).join('');
+
+  const dbar = $('#drillBar');
+  const need = Object.keys(DB.needDrill||{});
+  if(need.length > 0){
+    dbar.innerHTML = `<button class="drill-btn" onclick="startDrill()">
+      🔥 方法特训
+      <small>以下方法还没掌握：${need.map(m=>esc(m)+'（已连续答对 '+(DB.needDrill[m].streak||0)+'/'+DRILL_TARGET+'）').join('、')}<br>
+      用同一方法的不同题目连续答对 ${DRILL_TARGET} 道，才算真正掌握</small>
+    </button>`;
+  }else{
+    dbar.innerHTML = `<div class="drill-empty">✨ 所有方法都掌握啦！继续闯关保持全对吧～</div>`;
+  }
+}
+
+function startRound(lv){
+  if(D.active) endDrill(true);
+  Q.level = lv;
+  Q.roundNo++;
+  Q.round = pickRound(lv, ROUND_SIZE[lv]);
+  Q.queue = Q.round.slice();
+  Q.done = new Set();
+  Q.cur = null; Q.locked = false; Q.active = true;
+
+  $('#quizIntro').style.display='none';
+  $('#qdone').style.display='none';
+  $('#qbox').style.display='block';
+  $('#endDrillBtn').style.display='none';
+
+  logEvent('start_round',{level:lv, count:Q.round.length, roundNo:Q.roundNo});
+  renderLevelBar();
+
+  if(Q.queue.length===0){ showRoundDone(); return; }
+  nextQuestion();
+}
+
+function nextQuestion(){
+  Q.locked=false;
+  resetFeedback();
+  $('#qtools').style.display='none';
+
+  if(Q.queue.length===0){ showRoundDone(); return; }
+
+  Q.cur = Q.queue.shift();
+  const q = BANK[Q.cur];
+  const methods = LEVELS[Q.level].methods;
+
+  $('#qnum').textContent = `第 ${Q.done.size+1} 题 / 本轮共 ${Q.round.length} 题`;
+  $('#qstreak').textContent = `本轮已答对 ${Q.done.size} 题`;
+
+  const pct = Math.round(Q.done.size / Q.round.length * 100);
+  $('#pbar').style.width = pct+'%';
+  $('#qstat').textContent = `本轮进度 ${Q.done.size}/${Q.round.length}（${pct}%）`;
+
+  const badge=$('#qbadge');
+  const inDrill = !!(DB.needDrill && DB.needDrill[q.a]);
+  if(inDrill){
+    badge.style.display='inline-block';
+    badge.className='qbadge drill';
+    badge.textContent = `⚠️ 这个方法还在特训名单里：${q.a}`;
+  }else{
+    badge.style.display='none';
+  }
+
+  $('#qtext').textContent = q.t;
+  $('#opts').innerHTML = methods.map(m=>
+    `<button class="opt" data-m="${esc(m)}" onclick="answer('${esc(m)}')">${esc(m)}</button>`
+  ).join('');
+
+  $('#nextBtn').onclick = nextQuestion;
+  $('#nextBtn').textContent = '继续练习 →';
+}
+
+function answer(method){
+  if(Q.locked || Q.cur===null) return;
+  Q.locked = true;
+  const qid = Q.cur;
+  const q = BANK[qid];
+  const correct = method === q.a;
+
+  $$('#opts .opt').forEach(b=>{
+    b.disabled = true;
+    if(b.dataset.m===q.a) b.classList.add('ok');
+    if(b.dataset.m===method && !correct) b.classList.add('no');
+  });
+
+  const fb=$('#feedback');
+  if(correct){
+    Q.done.add(qid);
+    markCorrectQid(qid);
+    saveDB();
+    fb.className='feedback good show';
+    fb.innerHTML = `<b>✅ 答对啦！</b><br>正确答案：<b>${esc(q.a)}</b><br>${esc(q.e)}`;
+    const pct = Math.round(Q.done.size/Q.round.length*100);
+    $('#pbar').style.width = pct+'%';
+    $('#qstat').textContent = `本轮进度 ${Q.done.size}/${Q.round.length}（${pct}%）`;
+    $('#qstreak').textContent = `本轮已答对 ${Q.done.size} 题`;
+  }else{
+    if(!DB.needDrill) DB.needDrill={};
+    if(!DB.needDrill[q.a]) DB.needDrill[q.a] = {streak:0};
+    else DB.needDrill[q.a].streak = 0;
+    DB.wrongStat[q.a] = (DB.wrongStat[q.a]||0)+1;
+    saveDB();
+
+    fb.className='feedback bad show';
+    fb.innerHTML = `<b>❌ 再想想～</b><br>
+      你选的是「${esc(method)}」，正确答案是 <b>${esc(q.a)}</b>。<br>
+      ${esc(q.e)}<br>
+      <span style="color:#c0392b"><b>「${esc(q.a)}」已加入方法特训名单。</b>本轮结束后，系统会用这个方法的其他题目帮你练到连续答对 ${DRILL_TARGET} 道为止。</span>`;
+  }
+  logEvent('quiz',{qid, text:q.t, answer:method, correct, level:Q.level});
+  $('#qtools').style.display='flex';
+  $('#nextBtn').textContent = correct ? '继续练习 →' : '继续（稍后特训）→';
+}
+
+function showMethodHelp(){
+  const qid = D.active ? D.curQid : Q.cur;
+  if(qid===null || qid===undefined) return;
+  const q = BANK[qid];
+  const m = METHODS[q.a];
+  const fb = $('#feedback');
+  fb.className='feedback show';
+  fb.style.background='#f3f7ff'; fb.style.border='2px solid #cfe0ff';
+  fb.innerHTML = `<b>${m.icon} ${esc(q.a)}</b><br>${esc(m.def)}<br>
+    <span class="muted">小标记：${m.marks.map(esc).join('、')}</span><br>
+    <span style="color:#c0392b">${esc(m.tip)}</span>`;
+}
+
+function resetFeedback(){
+  const fb=$('#feedback');
+  fb.className='feedback';
+  fb.innerHTML='';
+  fb.style.background='';
+  fb.style.border='';
+}
+
+function showRoundDone(){
+  Q.active=false;
+  $('#qbox').style.display='none';
+  $('#qdone').style.display='block';
+  $('#doneIcon').textContent = '🎉';
+  $('#doneTitle').textContent = '本轮完成！';
+  $('#doneStat').textContent = `本轮 ${Q.round.length} 题全部答对，真棒！`;
+
+  const need = Object.keys(DB.needDrill||{});
+  let btns = `<button class="btn green" onclick="startRound(${Q.level})">🔄 再来一轮（换新题）</button>`;
+  if(Q.level < 3){
+    btns += `<button class="btn orange" onclick="startRound(${Q.level+1})">挑战下一关 →</button>`;
+  }
+  if(need.length > 0){
+    btns += `<button class="btn red" onclick="startDrill()">🔥 方法特训（${need.length}个方法待练）</button>`;
+  }
+  btns += `<button class="btn ghost" onclick="go('write')">去迁移运用 ✍️</button>`;
+  $('#doneBtns').innerHTML = btns;
+
+  logEvent('round_done',{level:Q.level, total:Q.round.length, roundNo:Q.roundNo});
+  renderLevelBar();
+  toast(need.length ? '本轮完成，有方法需要特训哦' : '🎉 本轮全对！');
+}
+
+/* =====================================================================
+   8. 方法特训（同一方法不同题目，连续答对3道才掌握）
+   ===================================================================== */
+const D = {
+  active:false,
+  queue:[],
+  currentMethod:null,
+  streak:{},
+  recent:{},
+  curQid:null,
+  locked:false,
+  totalMethods:0,
+  doneMethods:0
+};
+
+function startDrill(){
+  const methods = Object.keys(DB.needDrill||{});
+  if(!methods.length){ toast('太棒了，没有需要强化的方法！'); return; }
+
+  if(Q.active) Q.active=false;
+  D.active = true;
+  D.queue = shuffle(methods);
+  D.currentMethod = null;
+  D.streak = {};
+  D.recent = {};
+  D.curQid = null;
+  D.locked = false;
+  D.totalMethods = methods.length;
+  D.doneMethods = 0;
+  methods.forEach(m=>{
+    D.streak[m] = DB.needDrill[m].streak || 0;
+    D.recent[m] = [];
+  });
+
+  $('#quizIntro').style.display='none';
+  $('#qdone').style.display='none';
+  $('#qbox').style.display='block';
+  $('#endDrillBtn').style.display='inline-block';
+
+  logEvent('start_drill',{count:methods.length});
+  renderLevelBar();
+  nextDrillQuestion();
+}
+
+function endDrill(silent){
+  if(!D.active) return;
+  if(!silent && !confirm('结束特训？已掌握的进度会保留，没掌握的方法还在名单里。')) return;
+  D.active = false;
+  D.curQid = null;
+  $('#qbox').style.display='none';
+  $('#qdone').style.display='none';
+  $('#quizIntro').style.display='block';
+  $('#endDrillBtn').style.display='none';
+  renderLevelBar();
+  if(!silent) toast('已结束特训，进度已保存');
+}
+
+function nextDrillQuestion(){
+  D.locked = false;
+  resetFeedback();
+  $('#qtools').style.display='none';
+
+  while(D.queue.length){
+    const m = D.queue[0];
+    if((D.streak[m]||0) >= DRILL_TARGET){
+      delete DB.needDrill[m];
+      saveDB();
+      D.doneMethods++;
+      D.queue.shift();
+      D.currentMethod = null;
+      logEvent('method_mastered',{method:m});
+    }else{
+      break;
+    }
+  }
+
+  if(!D.queue.length){
+    finishDrill();
+    return;
+  }
+
+  D.currentMethod = D.queue[0];
+  const m = D.currentMethod;
+
+  const pool = methodQids(m);
+  let avail = pool.filter(id => !(D.recent[m]||[]).includes(id));
+  if(!avail.length){
+    D.recent[m] = [];
+    avail = pool.slice();
+  }
+  const last = (D.recent[m]||[]).slice(-1)[0];
+  avail = avail.filter(id => id !== last);
+  if(!avail.length) avail = pool.slice();
+  D.curQid = avail[Math.floor(Math.random()*avail.length)];
+  D.recent[m].push(D.curQid);
+  if(D.recent[m].length > 6) D.recent[m].shift();
+
+  renderDrillQuestion();
+}
+
+function renderDrillQuestion(){
+  const q = BANK[D.curQid];
+  const m = D.currentMethod;
+  const streak = D.streak[m] || 0;
+
+  $('#qnum').textContent = `方法特训 · ${m} · 第 ${D.doneMethods+1} / ${D.totalMethods} 个方法`;
+  $('#qstreak').textContent = `已掌握 ${D.doneMethods} 个方法`;
+
+  const pct = Math.round(D.doneMethods / D.totalMethods * 100);
+  $('#pbar').style.width = pct+'%';
+  $('#qstat').textContent = `方法进度 ${D.doneMethods}/${D.totalMethods}（${pct}%） ｜ 当前方法已连续答对 ${streak}/${DRILL_TARGET} 道`;
+
+  const badge=$('#qbadge');
+  badge.style.display='inline-block';
+  badge.className='qbadge drill';
+  badge.textContent = `🔥 正在强化：${m}（连续答对 ${DRILL_TARGET} 道不同题目才算掌握）`;
+
+  $('#qtext').textContent = q.t;
+  $('#opts').innerHTML = METHOD_NAMES.map(name=>
+    `<button class="opt" data-m="${esc(name)}" onclick="answerDrill('${esc(name)}')">${esc(name)}</button>`
+  ).join('');
+
+  $('#nextBtn').onclick = nextDrillQuestion;
+  $('#nextBtn').textContent = '继续 →';
+}
+
+function answerDrill(method){
+  if(D.locked || D.curQid===null) return;
+  D.locked = true;
+  const qid = D.curQid;
+  const q = BANK[qid];
+  const correct = method === q.a;
+  const m = q.a;
+
+  $$('#opts .opt').forEach(b=>{
+    b.disabled = true;
+    if(b.dataset.m===q.a) b.classList.add('ok');
+    if(b.dataset.m===method && !correct) b.classList.add('no');
+  });
+
+  const fb=$('#feedback');
+  if(correct){
+    D.streak[m] = (D.streak[m]||0) + 1;
+    if(DB.needDrill[m]) DB.needDrill[m].streak = D.streak[m];
+    saveDB();
+
+    if(D.streak[m] >= DRILL_TARGET){
+      fb.className='feedback good show';
+      fb.innerHTML = `<b>🎉 「${esc(m)}」已连续答对 ${DRILL_TARGET} 道不同题目，掌握啦！</b><br>
+        正确答案：<b>${esc(q.a)}</b><br>${esc(q.e)}<br>
+        <span class="muted">这个方法会从特训名单中移除。马上进入下一个方法～</span>`;
+    }else{
+      fb.className='feedback warn show';
+      fb.innerHTML = `<b>✅ 答对啦！</b><br>
+        正确答案：<b>${esc(q.a)}</b><br>${esc(q.e)}<br>
+        <span style="color:#d35400">「${esc(m)}」已连续答对 <b>${D.streak[m]}</b> 道，还差 <b>${DRILL_TARGET-D.streak[m]}</b> 道不同题目就掌握。</span>`;
+    }
+  }else{
+    D.streak[m] = 0;
+    if(DB.needDrill[m]) DB.needDrill[m].streak = 0;
+    DB.wrongStat[q.a] = (DB.wrongStat[q.a]||0)+1;
+    saveDB();
+
+    fb.className='feedback bad show';
+    fb.innerHTML = `<b>❌ 再想想～</b><br>
+      你选的是「${esc(method)}」，正确答案是 <b>${esc(q.a)}</b>。<br>
+      ${esc(q.e)}<br>
+      <span style="color:#c0392b">「${esc(m)}」的连续答对次数清零，我们换一道 ${esc(m)} 的题目继续练。</span>`;
+  }
+
+  const pct = Math.round(D.doneMethods / D.totalMethods * 100);
+  $('#pbar').style.width = pct+'%';
+  const curStreak = D.streak[m] || 0;
+  $('#qstat').textContent = `方法进度 ${D.doneMethods}/${D.totalMethods}（${pct}%） ｜ 当前方法已连续答对 ${curStreak}/${DRILL_TARGET} 道`;
+  $('#qstreak').textContent = `已掌握 ${D.doneMethods} 个方法`;
+
+  logEvent('drill_answer',{qid, text:q.t, answer:method, correct, method:m, streak:curStreak});
+  $('#qtools').style.display='flex';
+  $('#nextBtn').textContent = correct ? '继续 →' : '换一题继续 →';
+}
+
+function finishDrill(){
+  D.active = false;
+  D.curQid = null;
+  $('#qbox').style.display='none';
+  $('#qdone').style.display='block';
+  $('#endDrillBtn').style.display='none';
+
+  const left = Object.keys(DB.needDrill||{});
+  $('#doneIcon').textContent = left.length ? '💪' : '🏆';
+  $('#doneTitle').textContent = left.length ? '特训暂停' : '方法特训完成！';
+  if(left.length){
+    $('#doneStat').textContent = `还有 ${left.length} 个方法没掌握：${left.join('、')}。可以再练一轮。`;
+  }else{
+    $('#doneStat').textContent = `所有待强化的方法都已连续答对 ${DRILL_TARGET} 道不同题目，真正掌握啦！`;
+  }
+
+  let btns = '';
+  if(left.length){
+    btns += `<button class="btn orange" onclick="startDrill()">🔄 继续特训剩下的 ${left.length} 个方法</button>`;
+  }
+  btns += `<button class="btn green" onclick="startRound(1)">回到第一关</button>`;
+  btns += `<button class="btn ghost" onclick="go('write')">去迁移运用 ✍️</button>`;
+  $('#doneBtns').innerHTML = btns;
+
+  logEvent('drill_done',{left:left.length});
+  renderLevelBar();
+  toast(left.length ? '特训结束，还有方法待练' : '🏆 所有方法都掌握啦！');
+}
+
+/* =====================================================================
+   9. 迁移运用（选主题 或 写介绍，任选其一即可提交）
+   ===================================================================== */
+const TOPICS = ['我们的校园','我家的宠物','我的书包','一种水果','我最爱的玩具','家乡的一座桥','扫地机器人','大熊猫','长城','我的自行车'];
+let selfPicked = new Set();
+
+function renderWriteView(){
+  const box=$('#topicChips');
+  if(!box.dataset.done){
+    box.innerHTML = TOPICS.map(t=>`<button class="chip" onclick="pickTopic(this,'${esc(t)}')">${esc(t)}</button>`).join('');
+    box.dataset.done='1';
+  }
+  const sm=$('#selfMethods');
+  if(!sm.dataset.done){
+    sm.innerHTML = METHOD_NAMES.map(m=>{
+      const i=METHODS[m];
+      return `<span class="check" data-m="${esc(m)}" onclick="toggleSelf(this)">${i.icon} ${esc(m)}</span>`;
+    }).join('');
+    sm.dataset.done='1';
+  }
+}
+
+/* 点主题：选中；再点一下取消 */
+function pickTopic(el,t){
+  const wasOn = el.classList.contains('on');
+  $$('#topicChips .chip').forEach(c=>c.classList.remove('on'));
+  if(wasOn){
+    if($('#topicInput').value===t) $('#topicInput').value='';
+    logEvent('unpick_topic',{topic:t});
+    return;
+  }
+  el.classList.add('on');
+  $('#topicInput').value=t;
+  logEvent('pick_topic',{topic:t});
+}
+
+function toggleSelf(el){
+  el.classList.toggle('on');
+  const m=el.dataset.m;
+  if(el.classList.contains('on')) selfPicked.add(m); else selfPicked.delete(m);
+}
+
+function detectMethods(text){
+  const r=[];
+  if(/\d/.test(text)) r.push('列数字');
+  if(/(像|好像|仿佛|如同|犹如|似的)/.test(text)) r.push('打比方');
+  if(/(比如|例如|譬如|举个例子|如.+、)/.test(text)) r.push('举例子');
+  if(/(比|相当于|相比|不如|跟.+(一样|差不多))/.test(text)) r.push('作比较');
+  if(/(分为|分成|可以分为|一类是|两大类|几类)/.test(text)) r.push('分类别');
+  if(/(叫做|称为|所谓|指的是|就是|是指|什么是)/.test(text)) r.push('作诠释');
+  if(/(俗话说|古人云|谚语|诗中说|记载|研究表明|据.+(统计|调查))/.test(text)) r.push('引用');
+  if(/(表格|图表|示意图|柱状图|扇形图|折线图|流程图|地图)/.test(text)) r.push('列图表');
+  return Array.from(new Set(r));
+}
+
+function checkWriting(){
+  const text = $('#writingBox').value.trim();
+  if(text.length<8){ toast('再多写一点吧～'); return; }
+  const found = detectMethods(text);
+  const hint = $('#writeHint');
+  if(found.length===0){
+    hint.innerHTML = '老师小助手：暂时没检测到明显的说明方法。试试加个数字？举个例子？或者打个比方？';
+  }else{
+    hint.innerHTML = '老师小助手检测到你可能用了：' +
+      found.map(m=>`<b>${METHODS[m].icon}${esc(m)}</b>`).join('、') +
+      '。（仅供参考，最终以你自己的判断为准哦）';
+  }
+  logEvent('check_writing',{len:text.length, found});
+}
+
+/* ★ 核心修改：主题 和 介绍 任选其一即可提交 */
+function saveWriting(){
+  const topic = ($('#topicInput').value.trim() || '');
+  const text  = $('#writingBox').value.trim();
+
+  if(!topic && !text){
+    toast('请至少完成一项：选一个主题，或写下你的介绍');
+    return;
+  }
+  if(text && text.length < 10){
+    toast('介绍内容太少啦，再多写几句吧～');
+    return;
+  }
+
+  const auto = text ? detectMethods(text) : [];
+  let title = topic;
+  if(!title){
+    title = text.slice(0, 12) + (text.length > 12 ? '…' : '');
+  }
+
+  const rec = {
+    id:'w'+Date.now(),
+    topic: title,
+    userTopic: topic,
+    text,
+    onlyTopic: !text,
+    self:[...selfPicked],
+    auto,
+    time:Date.now()
+  };
+  DB.writings.unshift(rec);
+  saveDB();
+  logEvent('save_writing',{topic:title, len:text.length, self:rec.self, onlyTopic:rec.onlyTopic});
+
+  if(rec.onlyTopic){
+    toast('✅ 选题已保存！下次可以接着写介绍～');
+  }else{
+    toast('✅ 作品已提交，可在「我的记录」查看');
+  }
+
+  $('#writingBox').value='';
+  $('#topicInput').value='';
+  $$('#topicChips .chip').forEach(c=>c.classList.remove('on'));
+  $$('#selfMethods .check').forEach(c=>c.classList.remove('on'));
+  selfPicked.clear();
+  $('#writeHint').innerHTML='';
+  $('#ocrHint').innerHTML='';
+}
+
+/* =====================================================================
+   10. 语音识别
+   ===================================================================== */
+let recognizer=null, recTarget=null, recBtn=null;
+
+function toggleVoice(targetId, btn){
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SR){
+    alert('当前浏览器不支持语音识别。\n建议用电脑 Chrome / Edge，或者用下面的「拍照识别」。');
+    return;
+  }
+  if(recognizer){ stopVoice(); return; }
+
+  recTarget = document.getElementById(targetId);
+  recBtn = btn;
+  recognizer = new SR();
+  recognizer.lang='zh-CN';
+  recognizer.continuous=true;
+  recognizer.interimResults=true;
+
+  let base = recTarget.value;
+
+  recognizer.onstart=()=>{
+    btn.classList.add('recording');
+    btn.textContent='⏹ 停止录音';
+    toast('开始说话吧，我在听～');
+  };
+  recognizer.onresult=(e)=>{
+    let finalTxt='', interim='';
+    for(let i=e.resultIndex;i<e.results.length;i++){
+      const t=e.results[i][0].transcript;
+      if(e.results[i].isFinal) finalTxt+=t; else interim+=t;
+    }
+    if(finalTxt) base = base ? base + finalTxt : finalTxt;
+    recTarget.value = base + interim;
+  };
+  recognizer.onerror=(e)=>{
+    console.warn(e);
+    if(e.error==='not-allowed') alert('麦克风权限被拒绝，请在浏览器设置里允许使用麦克风。');
+    else if(e.error==='network') alert('语音服务连不上网络（部分浏览器需要联网的语音服务）。可以改用拍照识别或键盘输入。');
+    stopVoice();
+  };
+  recognizer.onend=()=>{
+    if(recBtn){ recBtn.classList.remove('recording'); recBtn.textContent='🎤 语音输入'; }
+    recognizer=null; recBtn=null; recTarget=null;
+  };
+  try{ recognizer.start(); }catch(err){ console.warn(err); }
+  logEvent('voice_start',{});
+}
+function stopVoice(){
+  if(recognizer){ try{ recognizer.stop(); }catch(e){} }
+  if(recBtn){ recBtn.classList.remove('recording'); recBtn.textContent='🎤 语音输入'; }
+  recognizer=null; recBtn=null; recTarget=null;
+}
+
+/* =====================================================================
+   11. 多张图片 OCR
+   ===================================================================== */
+let ocrWorker = null;
+
+async function getOcrWorker(){
+  if(ocrWorker) return ocrWorker;
+  if(!window.Tesseract) throw new Error('OCR 引擎未加载');
+  ocrWorker = await Tesseract.createWorker('chi_sim', 1, {
+    logger: m => {
+      if(m.status==='recognizing text'){
+        const el=$('#ocrHint');
+        if(el) el.textContent = `识别中… ${Math.round((m.progress||0)*100)}%`;
+      }
+    }
+  });
+  return ocrWorker;
+}
+
+async function handleOcr(fileList, targetId){
+  const files = Array.from(fileList||[]);
+  if(!files.length) return;
+  const hint = $('#ocrHint');
+  if(!window.Tesseract){
+    alert('OCR 引擎没有加载成功（可能是网络问题）。\n可以刷新页面重试，或者直接用键盘/语音输入。');
+    return;
+  }
+  const target = document.getElementById(targetId);
+  hint.textContent = `准备识别 ${files.length} 张图片…`;
+
+  let allText = '';
+  try{
+    const worker = await getOcrWorker();
+    for(let i=0;i<files.length;i++){
+      hint.textContent = `正在识别第 ${i+1}/${files.length} 张图片…`;
+      const { data:{ text } } = await worker.recognize(files[i]);
+      const clean = (text||'').replace(/\s+/g,' ').trim();
+      if(clean) allText += (allText?'\n':'') + clean;
+      hint.textContent = `已识别 ${i+1}/${files.length} 张…`;
+    }
+    if(allText){
+      target.value = (target.value ? target.value+'\n' : '') + allText;
+      hint.innerHTML = `✅ 共识别 ${files.length} 张图片。识别结果可能有错字，请自己检查修改一下～`;
+    }else{
+      hint.innerHTML = '😅 这几张图没识别出文字。可以换一张光线更好、字更清楚的图片试试，或者用语音/键盘输入。';
+    }
+  }catch(err){
+    console.error(err);
+    hint.innerHTML = '😅 识别失败：' + esc(err.message||'未知错误') + '。可以刷新页面重试，或改用语音输入。';
+  }
+  logEvent('ocr',{count:files.length, len:allText.length});
+}
+
+/* =====================================================================
+   12. 我的记录
+   ===================================================================== */
+function renderRecord(){
+  const totalAll = BANK.length;
+  const masteredAll = (DB.progress.all||[]).length;
+  const need = Object.entries(DB.needDrill||{});
+  const wrongTop = Object.entries(DB.wrongStat||{}).sort((a,b)=>b[1]-a[1]).slice(0,3);
+
+  $('#recStat').innerHTML = `
+    <p>👦 <b>${esc(DB.student.cls||'')} ${esc(DB.student.name||'（未填写姓名）')}</b></p>
+    <p>📚 题库共 ${totalAll} 题，累计答对过 <b style="color:#27ae60">${masteredAll}</b> 题</p>
+    <p>🔥 待强化的说明方法 <b style="color:#eb5757">${need.length}</b> 个（连续答对 ${DRILL_TARGET} 道不同题目才算掌握）</p>
+    <p>✍️ 已提交作品/选题 <b>${DB.writings.length}</b> 条</p>
+    <p>🕒 学习操作记录 <b>${DB.events.length}</b> 条</p>
+    ${wrongTop.length?`<p class="muted">最容易搞错的方法：${wrongTop.map(([k,v])=>`${esc(k)}（${v}次）`).join('、')}</p>`:''}
+  `;
+
+  const rd = $('#recDrill');
+  if(!need.length){
+    rd.innerHTML = '<p class="muted">🎉 所有说明方法都掌握了，没有需要强化的方法！</p>';
+  }else{
+    rd.innerHTML = need.map(([m,st])=>`
+      <div class="evt" style="border-left-color:#f2994a;background:#fff8ec">
+        <b>${METHODS[m].icon} ${esc(m)}</b>　
+        <span class="muted">已连续答对 ${st.streak||0}/${DRILL_TARGET} 道</span><br>
+        <span class="muted">${esc(METHODS[m].def)}</span>
+      </div>`).join('') +
+      `<div class="tools" style="margin-top:8px">
+        <button class="btn red" onclick="go('quiz');startDrill()">🔥 去方法特训</button>
+      </div>`;
+  }
+
+  const w=$('#recWritings');
+  if(!DB.writings.length){
+    w.innerHTML = '<p class="muted">还没有作品或选题，去「迁移运用」试试吧！</p>';
+  }else{
+    w.innerHTML = DB.writings.map(x=>{
+      const onlyTopic = x.onlyTopic || !x.text;
+      return `<div class="wcard">
+        <div class="tt">${onlyTopic?'📌':'📝'} ${esc(x.topic||'未命名')}${onlyTopic?'（仅选题）':''}</div>
+        ${onlyTopic
+          ? `<p class="muted" style="margin:2px 0">（只选了主题，还没有写介绍）</p>`
+          : `<div style="white-space:pre-wrap">${esc(x.text)}</div>`
+        }
+        <div class="mt">
+          ${x.self&&x.self.length?`我用到的说明方法：${x.self.map(m=>`<span class="badge b">${esc(m)}</span>`).join(' ')}`:''}
+          ${x.auto&&x.auto.length?`｜系统检测：${x.auto.map(esc).join('、')}`:''}
+          <br>${fmtTime(x.time)}
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  const ev=$('#recEvents');
+  const list = DB.events.slice(-60).reverse();
+  if(!list.length){
+    ev.innerHTML='<p class="muted">还没有记录。</p>';
+  }else{
+    ev.innerHTML = list.map(e=>{
+      let txt='';
+      if(e.type==='quiz'){
+        const q=BANK[e.detail.qid];
+        txt = (e.detail.correct?'✅ 答对':'❌ 答错') + `「${esc((q&&q.t)||'')}」→ ${esc(e.detail.answer)}`;
+      }else if(e.type==='drill_answer'){
+        txt = (e.detail.correct?'✅ 特训答对':'❌ 特训答错') + `「${esc(e.detail.method)}」→ ${esc(e.detail.answer)}（连续${e.detail.streak}/${DRILL_TARGET}）`;
+      }else if(e.type==='start_round'){
+        txt = `开始第 ${e.detail.level} 关第 ${e.detail.roundNo} 轮，本轮随机抽 ${e.detail.count} 题`;
+      }else if(e.type==='start_drill'){
+        txt = `开始方法特训，共 ${e.detail.count} 个方法`;
+      }else if(e.type==='round_done'){
+        txt = `🎉 完成第 ${e.detail.level} 关第 ${e.detail.roundNo} 轮（${e.detail.total} 题）`;
+      }else if(e.type==='method_mastered'){
+        txt = `🏆 方法「${esc(e.detail.method)}」连续答对 ${DRILL_TARGET} 道不同题目，已掌握`;
+      }else if(e.type==='drill_done'){
+        txt = e.detail.left ? `特训结束，还有 ${e.detail.left} 个方法待练` : '🏆 方法特训全部完成';
+      }else if(e.type==='save_writing'){
+        txt = e.detail.onlyTopic
+          ? `保存选题《${esc(e.detail.topic)}》`
+          : `提交作品《${esc(e.detail.topic)}》`;
+      }else if(e.type==='check_writing'){
+        txt = `检测写作中的说明方法：${e.detail.found.map(esc).join('、')||'无'}`;
+      }else if(e.type==='pick_topic'){
+        txt = `选择主题《${esc(e.detail.topic)}》`;
+      }else if(e.type==='unpick_topic'){
+        txt = `取消主题《${esc(e.detail.topic)}》`;
+      }else if(e.type==='ocr'){
+        txt = `拍照识别 ${e.detail.count} 张，识别 ${e.detail.len} 字`;
+      }else if(e.type==='info'){
+        txt = `填写个人信息`;
+      }else{
+        txt = e.type;
+      }
+      return `<div class="evt"><span class="tm">${fmtTime(e.t)}</span>${txt}</div>`;
+    }).join('');
+  }
+}
+
+function exportData(){
+  const payload = {
+    version:2,
+    exportedAt:new Date().toISOString(),
+    student:DB.student,
+    progress:DB.progress,
+    wrongStat:DB.wrongStat,
+    needDrill:DB.needDrill,
+    writings:DB.writings,
+    events:DB.events
+  };
+  const name = `${DB.student.cls||'未填班级'}_${DB.student.name||'未填姓名'}_说明方法学习记录.json`
+                .replace(/[\\/:*?"<>|]/g,'');
+  const blob = new Blob([JSON.stringify(payload,null,2)],{type:'application/json;charset=utf-8'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = name;
+  a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),3000);
+  toast('已导出，把文件发给老师吧～');
+  logEvent('export',{});
+}
+
+function clearData(){
+  if(!confirm('确定要清空所有学习记录吗？这个操作不能撤销。')) return;
+  localStorage.removeItem(KEY);
+  DB = loadDB();
+  renderStudent();
+  renderRecord();
+  Q.done=new Set(); Q.queue=[]; Q.round=[]; Q.cur=null; Q.active=false; Q.roundNo=0;
+  D.active=false; D.queue=[]; D.curQid=null; D.streak={}; D.recent={};
+  $('#qbox').style.display='none';
+  $('#qdone').style.display='none';
+  $('#quizIntro').style.display='block';
+  $('#endDrillBtn').style.display='none';
+  renderLevelBar();
+  toast('已清空');
+}
+
+/* =====================================================================
+   13. 教师端
+   ===================================================================== */
+let teacherData = [];
+
+function teacherImport(files){
+  Array.from(files||[]).forEach(f=>{
+    const r=new FileReader();
+    r.onload=e=>{
+      try{
+        const d=JSON.parse(e.target.result);
+        if(d && (d.student||d.events)){ teacherData.push(d); renderTeacher(); }
+        else alert('文件格式不对：'+f.name);
+      }catch(err){ alert('解析失败：'+f.name); }
+    };
+    r.readAsText(f);
+  });
+}
+function teacherPasteParse(){
+  const txt=$('#teacherPaste').value.trim();
+  if(!txt) return;
+  try{
+    const d=JSON.parse(txt);
+    const arr = Array.isArray(d)?d:[d];
+    arr.forEach(x=>{ if(x&&(x.student||x.events)) teacherData.push(x); });
+    renderTeacher();
+    $('#teacherPaste').value='';
+    toast('解析成功');
+  }catch(e){ alert('内容不是有效的 JSON 数据'); }
+}
+function teacherClear(){ teacherData=[]; renderTeacher(); toast('已清空'); }
+
+function renderTeacher(){
+  const box=$('#teacherTable');
+  if(!teacherData.length){ box.innerHTML='<p class="muted">还没有导入数据。</p>'; $('#teacherWritings').innerHTML='<p class="muted">—</p>'; return; }
+
+  let html = `<table><thead><tr>
+      <th>学生</th><th>累计答对</th><th>待强化方法</th><th>作品/选题</th><th>操作记录</th><th>易错方法</th><th>最近活动</th>
+    </tr></thead><tbody>`;
+
+  teacherData.forEach(d=>{
+    const s=d.student||{};
+    const mastered = (d.progress&&d.progress.all?d.progress.all:[]).length;
+    const need = Object.keys(d.needDrill||{});
+    const wrongTop = Object.entries(d.wrongStat||{}).sort((a,b)=>b[1]-a[1]).slice(0,3);
+    const last = (d.events&&d.events.length) ? fmtTime(d.events[d.events.length-1].t) : '—';
+    html += `<tr>
+      <td><b>${esc(s.name||'未填姓名')}</b><br><span class="muted">${esc(s.cls||'')}</span></td>
+      <td><span class="badge">${mastered} 题</span></td>
+      <td>${need.length ? need.map(m=>`<span class="badge r">${esc(m)}</span>`).join(' ') : '<span class="badge">全部掌握</span>'}</td>
+      <td>${(d.writings||[]).length}</td>
+      <td>${(d.events||[]).length} 条</td>
+      <td>${wrongTop.map(([k,v])=>esc(k)+'('+v+')').join('<br>')||'—'}</td>
+      <td class="muted">${last}</td>
+    </tr>`;
+  });
+  html += '</tbody></table>';
+  box.innerHTML = html;
+
+  let wh = '';
+  teacherData.forEach(d=>{
+    const s=d.student||{};
+    (d.writings||[]).forEach(w=>{
+      const onlyTopic = w.onlyTopic || !w.text;
+      wh += `<div class="wcard">
+        <div class="tt">${esc(s.cls||'')} ${esc(s.name||'')} · ${esc(w.topic||'未命名')}${onlyTopic?'（仅选题）':''}</div>
+        ${onlyTopic
+          ? `<p class="muted" style="margin:2px 0">（该生只选了主题，还没有写介绍）</p>`
+          : `<div style="white-space:pre-wrap">${esc(w.text)}</div>`
+        }
+        <div class="mt">
+          ${(w.self||[]).length?`学生自评：${w.self.map(m=>`<span class="badge b">${esc(m)}</span>`).join(' ')}`:'学生自评：无'}
+          ｜系统检测：${(w.auto||[]).map(esc).join('、')||'无'}
+          ｜${fmtTime(w.time)}
+        </div>
+      </div>`;
+    });
+  });
+  $('#teacherWritings').innerHTML = wh || '<p class="muted">暂无作品或选题。</p>';
+}
+
+function teacherExportAll(){
+  if(!teacherData.length){ toast('没有数据可以导出'); return; }
+  const blob=new Blob([JSON.stringify(teacherData,null,2)],{type:'application/json;charset=utf-8'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='全班说明方法学习汇总.json';
+  a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),3000);
+}
+
+/* =====================================================================
+   14. 初始化
+   ===================================================================== */
+(function init(){
+  renderStudent();
+  renderLevelBar();
+  renderMethods();
+  renderWriteView();
+  window.addEventListener('beforeunload', ()=>{ if(recognizer) stopVoice(); });
+  console.log('%c说明方法小达人已就绪','color:#2f80ed;font-weight:bold');
+})();
+</script>
+</body>
+</html>
